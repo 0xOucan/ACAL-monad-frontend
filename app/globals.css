@@ -1,0 +1,382 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Replaced with new parametrizable skin pack tokens */
+  /* —— CORE (dark theme palette) —— */
+  --primary: #14b8a6; /* turquesa - mantiene visibilidad */
+  --secondary: #1e3a8a; /* azul marino oscuro */
+  --accent: #f59e0b; /* oro - contraste en oscuro */
+  --neutral: #1f2937; /* gris muy oscuro como base */
+
+  /*—— Soporte (dark theme) ——*/
+  --white: #ffffff;
+  --gray-100: #111827; /* casi negro para fondos */
+  --gray-900: #f9fafb; /* casi blanco para texto */
+
+  /* RGB para utilidades con opacidad */
+  --rgb-primary: 20 184 166;
+  --rgb-secondary: 30 58 138;
+  --rgb-accent: 245 158 11;
+  --rgb-neutral: 31 41 55; /* gris oscuro */
+
+  /* Superficies oscuras por defecto */
+  --bg: #0f172a; /* slate-900 - fondo muy oscuro */
+  --surface: var(--neutral); /* gris oscuro para cards */
+  --text: var(--white);
+
+  /* Updated shadcn tokens to use new skin pack colors */
+  --background: #0f172a; /* fondo muy oscuro */
+  --foreground: var(--white); /* texto blanco */
+  --card: var(--neutral); /* cards oscuras */
+  --card-foreground: var(--white);
+  --popover: var(--neutral);
+  --popover-foreground: var(--white);
+  --muted: #374151; /* gris medio oscuro */
+  --muted-foreground: #9ca3af; /* gris claro para texto secundario */
+  --destructive: #dc2626; /* rojo más visible en oscuro */
+  --destructive-foreground: var(--white);
+  --border: #4b5563; /* bordes grises visibles */
+  --input: var(--neutral); /* inputs oscuros */
+  --ring: var(--primary);
+  --chart-1: var(--primary);
+  --chart-2: var(--secondary);
+  --chart-3: var(--accent);
+  --chart-4: var(--neutral);
+  --chart-5: #dc2626;
+  --radius: 0rem; /* No border radius for new aesthetic */
+  --sidebar: var(--neutral);
+  --sidebar-foreground: var(--white);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--neutral);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--neutral);
+  --sidebar-border: #4b5563;
+  --sidebar-ring: var(--primary);
+}
+
+/* Added VT323 font for retro mono aesthetic */
+@font-face {
+  font-family: "VT323";
+  src: url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+  font-display: swap;
+}
+
+:root {
+  --font-mono: "VT323", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: rgb(var(--rgb-primary) / 1);
+  --color-primary-foreground: var(--white);
+  --color-secondary: rgb(var(--rgb-secondary) / 1);
+  --color-secondary-foreground: var(--white);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: rgb(var(--rgb-accent) / 1);
+  --color-accent-foreground: var(--neutral);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Added new skin pack color utilities */
+  --color-surface: var(--surface);
+  --color-bg: var(--bg);
+  --color-white: var(--white);
+  --color-gray100: var(--gray-100);
+  --color-neutral: rgb(var(--rgb-neutral) / 1);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-bg text-foreground;
+    font-family: var(--font-mono);
+    /* Removed pixel art rendering for cleaner new aesthetic */
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  button,
+  [role="button"] {
+    transition: all 0.2s ease-out;
+  }
+
+  input,
+  textarea,
+  select {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  [class*="card"],
+  [class*="border"] {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+}
+
+/* Added new skin pack frame and button styles */
+@layer utilities {
+  .frame {
+    position: relative;
+    background: var(--surface);
+    color: var(--white); /* texto blanco en frames */
+  }
+  .frame::before,
+  .frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  /* Borde exterior más visible */
+  .frame::before {
+    box-shadow: 0 0 0 2px #4b5563; /* gris más claro para visibilidad */
+  }
+  /* Segunda línea interior con acento */
+  .frame::after {
+    box-shadow: inset 0 0 0 2px color-mix(in srgb, #4b5563 75%, var(--accent) 25%);
+  }
+
+  /* Variante acento fuerte */
+  .frame-accent::before {
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    padding: .65rem .9rem;
+    line-height: 1;
+    letter-spacing: .02em;
+    cursor: pointer;
+    background: var(--primary);
+    color: var(--neutral); /* texto oscuro en botón primario */
+    border: none;
+    box-shadow: 0 0 0 2px #4b5563, 4px 4px 0 0 rgba(0, 0, 0, 0.5); /* sombra más fuerte */
+    transition: transform 60ms ease, filter .15s ease;
+  }
+  .btn:hover {
+    filter: brightness(1.15); /* más brillo en hover para dark theme */
+  }
+  .btn:active {
+    transform: translate(1px, 1px);
+    box-shadow: 0 0 0 2px #4b5563, 3px 3px 0 0 rgba(0, 0, 0, 0.5);
+  }
+  .btn--secondary {
+    background: var(--secondary);
+    color: var(--white); /* texto blanco en botón secundario */
+  }
+  .btn--accent {
+    background: var(--accent);
+    color: var(--neutral);
+  }
+  .btn[disabled] {
+    opacity: 0.4; /* más opacidad para mejor visibilidad */
+    cursor: not-allowed;
+  }
+
+  .input {
+    width: 100%;
+    background: var(--surface);
+    color: var(--white); /* texto blanco en inputs */
+    padding: .6rem .7rem;
+    outline: none;
+    border: 0;
+    box-shadow: inset 0 0 0 2px #4b5563, 4px 4px 0 0 rgba(0, 0, 0, 0.3);
+  }
+  .input:focus {
+    box-shadow: inset 0 0 0 2px var(--accent), 4px 4px 0 0 rgba(0, 0, 0, 0.3);
+  }
+  .input::placeholder {
+    color: #9ca3af; /* placeholder gris claro */
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    padding: .25rem .5rem;
+    background: color-mix(in srgb, var(--accent) 25%, var(--neutral) 75%);
+    color: var(--white); /* texto blanco en badges */
+    box-shadow: 0 0 0 2px #4b5563;
+  }
+
+  /* Updated animations to use new color tokens */
+  @keyframes shimmer {
+    from {
+      background-position: -200% 0;
+    }
+    to {
+      background-position: 200% 0;
+    }
+  }
+  .loading-bar {
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--secondary) 40%, transparent),
+      color-mix(in srgb, var(--primary) 60%, transparent),
+      color-mix(in srgb, var(--secondary) 40%, transparent)
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.2s linear infinite;
+  }
+
+  /* Page transition animations */
+  .page-enter {
+    animation: slideInRight 0.3s ease-out;
+  }
+
+  .page-exit {
+    animation: slideOutLeft 0.3s ease-in;
+  }
+
+  /* Success animations */
+  .golden-glow {
+    animation: goldenGlow 1.5s ease-in-out infinite alternate;
+  }
+
+  .treasure-sparkle {
+    animation: sparkle 0.8s ease-out;
+  }
+
+  /* Error shake animation */
+  .error-shake {
+    animation: shake 0.5s ease-in-out;
+  }
+
+  /* Micro-interactions */
+  .scale-on-hover {
+    transition: transform 0.2s ease-out;
+  }
+
+  .scale-on-hover:hover {
+    transform: scale(1.05);
+  }
+
+  .fade-in-up {
+    animation: fadeInUp 0.5s ease-out;
+  }
+
+  .slide-in-bottom {
+    animation: slideInBottom 0.4s ease-out;
+  }
+}
+
+/* Updated keyframe animations to use new color tokens */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes goldenGlow {
+  0% {
+    box-shadow: 0 0 5px var(--accent);
+  }
+  100% {
+    box-shadow: 0 0 20px var(--accent), 0 0 30px var(--accent);
+  }
+}
+
+@keyframes sparkle {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+    opacity: 1;
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-4px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInBottom {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
